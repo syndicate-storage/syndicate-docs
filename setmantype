@@ -1,0 +1,26 @@
+#!/bin/bash
+#convert the man section type to the type provided
+#setmantype <man page> type
+
+if [ $# -ne 2 ]; then
+    echo "Error: invalid number of arguments, $# provided"
+    echo "Syntax: setmantype <man page> type"
+    exit
+fi
+manfilepath=`find . -name "$1.[0-9]" | grep -v "$1.$2"`
+if [ -z "$manfilepath" ] || [ ! -f "$manfilepath" ]; then
+    echo "Error: $1 does not exist"
+    exit
+fi
+manfile=`basename $manfilepath`
+mancommand="${manfile%.*}"
+mantypeorig="${manfile##*.}"
+mantypenewpath=`echo $manfilepath | sed "s/man$mantypeorig/man$2/g" | xargs -i dirname {}`
+
+if [ ! -d "$mantypenewpath" ]; then
+    mkdir -p "$mantypenewpath"
+fi
+printf "Converting $manfilepath to $mantypenewpath/${mancommand}.$2 ... "
+cat $manfilepath | sed "s/$mancommand\" $mantypeorig \"/$mancommand\" $2 \"/g" > "$mantypenewpath/${mancommand}.$2"
+rm "$manfilepath"
+echo "done"

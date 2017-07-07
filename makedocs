@@ -1,0 +1,13 @@
+#!/bin/bash
+
+: ${DOXYGEN_FILE:=./Doxyfile.cfg}
+
+#generate documentation
+doxygen "$DOXYGEN_FILE"
+
+#find "tool" man files and convert to type "1"
+for manfile in `grep -r "@page" * | awk -F: '{ print $1 }' | grep -v -e "makedocs" -e "html/"`
+do
+    mancommand=`basename "${manfile%.*}"`
+    ./setmantype "$mancommand" 1
+done
