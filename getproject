@@ -27,9 +27,14 @@ for projname in $@; do
                 echo "[done]"
             else
                 echo Error: $PROJECTPATH/$project/workspace/source does not exist
-            fi 
+            fi
         else
-            echo Error: $1 not found
+            cd "$SOURCES"
+            git clone $projname
+            proj=`basename $projname`
+            if [ ! -d "$SOURCES/$proj" ]; then
+                echo Error: $1 not found
+            fi
         fi
     else
         if [ -d "$SOURCES/$projname" ]; then
@@ -38,6 +43,10 @@ for projname in $@; do
         else
             cd "$SOURCES"
             git clone $projname
+            proj=`basename $projname`
+            if [ ! -d "$SOURCES/$proj" ]; then
+                echo Error: $1 not found
+            fi
         fi
     fi
 done
