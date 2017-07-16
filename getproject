@@ -1,7 +1,7 @@
 #!/bin/bash
 # getproject PROJECTs...
 #
-# If on a Jenkins server, enter the project path below and this script will pull sources from the project path, otherwise it will try to git clone/pull
+# If on a Jenkins server, enter the project path below and this script will pull sources from the project path, otherwise it will try to git clone/pull.  If cloning, you will need to enter the full http repo.
 
 : ${PROJECTPATH:=/var/lib/jenkins/jobs}
 : ${SOURCES:=sources}
@@ -10,15 +10,15 @@ if [ $# -eq 0 ]; then
     echo "Error: invalid syntax"
     echo "getproject <PROJECTs>..."
 fi
+if [ ! -d "$SOURCES" ]; then
+    mkdir "$SOURCES"
+fi
 
 for projname in $@; do
     if [ -d $PROJECTPATH ]; then
         project=`ls $PROJECTPATH | grep "${projname}-src"`
         if [ -n "$project" ]; then
             if [ -d "$PROJECTPATH/$project/workspace/source" ]; then
-                if [ ! -d "$SOURCES" ]; then
-                    mkdir "$SOURCES"
-                fi
                 if [ -d "$SOURCES/$projname" ]; then
                     rm -rf "$SOURCES/$projname"
                 fi
