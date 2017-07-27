@@ -12,12 +12,14 @@ all: get fixmain docs web
 #########################
 # get the source provided
 #########################
+.PHONY: get
 get:
 	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject syndicate-core syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io
 
 #########################
 # fix the header info for the main page, remove "layout" and "title" from markup
 #########################
+.PHONY: fixmain
 fixmain:
 	sed '/---/,/---/d' $(SOURCES)/syndicate-storage.github.io/index.md > $(SOURCES)/index.md
 	rm -rf $(SOURCES)/syndicate-storage.github.io
@@ -27,12 +29,14 @@ fixmain:
 #########################
 # generate documentation
 #########################
+.PHONY: docs
 docs:
 	DOXYGEN_FILE=$(DOXYGEN_FILE) $(WORKSPACE)/makedocs
 
 #########################
 # copy generated html to web path
 #########################
+.PHONY: web
 web:
 	rm -rf $(WEBPATH)/*
 	cp -r html/* $(WEBPATH)
@@ -40,6 +44,7 @@ web:
 #########################
 # clean up
 #########################
+.PHONY: clean
 clean:
 	rm -rf $(WORKSPACE)/html
 	rm -rf $(WORKSPACE)/man
