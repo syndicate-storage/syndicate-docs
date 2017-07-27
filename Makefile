@@ -19,7 +19,10 @@ get:
 # fix the header info for the main page, remove "layout" and "title" from markup
 #########################
 fixmain:
-	sed  -i '/---/,/---/d' $(SOURCES)/syndicate-storage.github.io/index.md
+	sed '/---/,/---/d' $(SOURCES)/syndicate-storage.github.io/index.md > $(SOURCES)/index.md
+	rm -rf $(SOURCES)/syndicate-storage.github.io
+	mkdir $(SOURCES)/syndicate-storage.github.io
+	mv $(SOURCES)/index.md $(SOURCES)/syndicate-storage.github.io
 
 #########################
 # generate documentation
