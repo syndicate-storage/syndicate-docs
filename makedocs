@@ -3,10 +3,14 @@
 : ${DOXYGEN_FILE:=./Doxyfile.cfg}
 
 #generate documentation
+if [ -z `which doxygen` ]; then
+    echo "doxygen tool not found, please verify that Doxygen is installed"
+    exit
+fi
 doxygen "$DOXYGEN_FILE"
 
 #find "tool" man files and convert to type "1"
-for manfile in `grep -r "@page" * | awk -F: '{ print $1 }' | grep -v -e "makedocs" -e "html/"`
+for manfile in `grep -r "@page" * | grep -v "code-documentation.md" | awk -F: '{ print $1 }' | grep -v -e "makedocs" -e "html/"`
 do
     mancommand=`basename "${manfile%.*}"`
     ./setmantype "$mancommand" 1
