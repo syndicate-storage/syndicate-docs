@@ -25,23 +25,27 @@ if [ ! -d $manpath ]; then
     exit
 fi
 
-> syndicate_man-install_list.txt
+> installed_man_pages.txt
 for manpage in `find man | cut -d/ -f2- | grep / | sort -u`
 do
     mantype=`echo $manpage | cut -d/ -f1`
     if [ ! -d "$manpath/$mantype" ]; then
         mkdir "$manpath/$mantype"
     fi
-    cp "$manpage" "$manpath/$mantype"
+    cp "man/$manpage" "$manpath/$mantype"
     if [ -f "$manpath/$manpage" ]; then
-        echo $manpage >> syndicate_man-install_list.txt
+        echo $manpage >> installed_man_pages.txt
     fi
 done
 
-if [ -s syndicate_man-install_list.txt ]; then
-    echo "Updating man database"
-    mandb $manpath
+if [ -s installed_man_pages.txt ]; then
+    if [ -n `which mandb` ]; then
+        echo "Updating man database"
+        mandb $manpath
+    else 
+        echo "mandb tool not found, please verify that mandb (man) is installed"
+    fi
 else
-    rm syndicate_man-install_list.txt
+    rm installed_man_pages.txt
     echo "No man pages were installed, man database was not updated"
 fi

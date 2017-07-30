@@ -10,11 +10,18 @@ SOURCES ?= sources
 all: get fixmain docs web
 
 #########################
-# get the source provided
+# get the source via butler
 #########################
 .PHONY: get
 get:
 	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject syndicate-core syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io
+
+#########################
+# get the source via github
+#########################
+.PHONY: getgit
+getgit:
+	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject https://github.com/syndicate-storage/syndicate-core https://github.com/syndicate-storage/syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io
 
 #########################
 # fix the header info for the main page, remove "layout" and "title" from markup

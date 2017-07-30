@@ -33,21 +33,20 @@ for projname in $@; do
             git clone $projname
             proj=`basename $projname`
             if [ ! -d "$SOURCES/$proj" ]; then
-                echo Error: $1 not found
+                echo "Error: $1 not found"
             fi
         fi
     else
-        if [ -d "$SOURCES/$projname" ]; then
-            cd "$SOURCES/$projname"
+        proj=`basename $projname`
+        if [ -d "$SOURCES/$proj" ]; then
+            cd "$SOURCES/$proj"
             git pull
         else
             cd "$SOURCES"
             git clone $projname
-            proj=`basename $projname`
-            if [ ! -d "$SOURCES/$proj" ]; then
+            if [ ! -d "$proj" ]; then
                 echo Error: $1 not found
             fi
         fi
     fi
 done
-    
