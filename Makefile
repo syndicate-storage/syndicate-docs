@@ -42,6 +42,13 @@ web:
 	cp -r html/* $(WEBPATH)
 
 #########################
+# install man pages, run this as root
+#########################
+.PHONY: installman
+installman:
+	$(WORKSPACE)/installman
+
+#########################
 # clean up
 #########################
 .PHONY: clean

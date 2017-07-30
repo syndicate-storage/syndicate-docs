@@ -1,0 +1,47 @@
+#!/bin/bash
+# Syntax:
+#     installman <PATH>
+#     installman
+#
+#     When PATH is not specified, the default path is "/usr/local/share/man"
+#
+
+if [ $# -gt 0 ]; then
+    manpath=$1
+elif [[ ! `id` =~ uid=0 ]]; then
+    echo "Must run as root to install to the default path (/usr/local/share/man)" 
+    exit
+else
+    manpath="/usr/local/share/man"
+fi
+    
+if [ ! -d "man" ]; then
+    echo "Nothing to do: man pages are not available to install"
+    exit
+fi
+
+if [ ! -d $manpath ]; then
+    echo "Error: path '$manpath' does not exist"
+    exit
+fi
+
+> syndicate_man-install_list.txt
+for manpage in `find man | cut -d/ -f2- | grep / | sort -u`
+do
+    mantype=`echo $manpage | cut -d/ -f1`
+    if [ ! -d "$manpath/$mantype" ]; then
+        mkdir "$manpath/$mantype"
+    fi
+    cp "$manpage" "$manpath/$mantype"
+    if [ -f "$manpath/$manpage" ]; then
+        echo $manpage >> syndicate_man-install_list.txt
+    fi
+done
+
+if [ -s syndicate_man-install_list.txt ]; then
+    echo "Updating man database"
+    mandb $manpath
+else
+    rm syndicate_man-install_list.txt
+    echo "No man pages were installed, man database was not updated"
+fi
