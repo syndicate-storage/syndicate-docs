@@ -15,3 +15,6 @@ do
     mancommand=`basename "${manfile%.*}"`
     ./setmantype "$mancommand" 1
 done
+
+#remove the man directory references
+grep -ri "Directory Reference" man | awk -F: '{ print $1 }' | sort -u | xargs -i rm {}
