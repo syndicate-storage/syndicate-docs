@@ -6,13 +6,15 @@
 #     When PATH is not specified, the default path is "/usr/local/share/man"
 #
 
+: ${PREFIX:=/usr/local}
+
 if [ $# -gt 0 ]; then
     manpath=$1
-elif [[ ! `id` =~ uid=0 ]]; then
-    echo "Must run as root to install to the default path (/usr/local/share/man)" 
+elif [[ $PREFIX =~ /usr ]] && [[ ! `id` =~ uid=0 ]]; then
+    echo "Must run as root to install to the default path ($PREFIX/share/man)" 
     exit
 else
-    manpath="/usr/local/share/man"
+    manpath="$PREFIX/share/man"
 fi
     
 if [ ! -d "man" ]; then
