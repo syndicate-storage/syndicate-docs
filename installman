@@ -10,9 +10,6 @@
 
 if [ $# -gt 0 ]; then
     manpath=$1
-elif [[ $PREFIX == /usr* ]] && [[ ! `id` =~ uid=0 ]]; then
-    echo "Must run as root to install to the default path ($PREFIX/share/man)" 
-    exit
 else
     manpath="$PREFIX/share/man"
 fi
