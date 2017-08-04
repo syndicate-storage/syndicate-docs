@@ -17,8 +17,6 @@ fi
 for projname in $@; do
     if [ -d $PROJECTPATH ]; then
         project=`ls $PROJECTPATH | grep "${projname}-src"`
-        echo ls --
-        ls $PROJECTPATH
         if [ -n "$project" ]; then
             if [ -d "$PROJECTPATH/$project/workspace/source" ]; then
                 if [ -d "$SOURCES/$projname" ]; then
