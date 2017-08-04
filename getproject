@@ -45,7 +45,7 @@ for projname in $@; do
             cd "$SOURCES"
             git clone $projname
             if [ ! -d "$proj" ]; then
-                echo Error: $1 not found
+                echo Error: $1 was not found
             fi
         fi
     fi
