@@ -20,6 +20,11 @@ if [ ! -d "man" ]; then
 fi
 
 if [ ! -d $manpath ]; then
+    echo "creating '$manpath'"
+    mkdir -p "$manpath"
+fi
+
+if [ ! -d $manpath ]; then
     echo "Error: path '$manpath' does not exist"
     exit
 fi
