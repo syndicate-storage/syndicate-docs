@@ -6,12 +6,12 @@
 #     When PATH is not specified, the default path is "/usr/local/share/man"
 #
 
-: ${PREFIX:=/usr/local}
+: ${MANDIR:=/usr/local/share/man}
 
 if [ $# -gt 0 ]; then
     manpath=$1
 else
-    manpath="$PREFIX/share/man"
+    manpath="$MANDIR"
 fi
 
 if [ ! -d "man" ]; then

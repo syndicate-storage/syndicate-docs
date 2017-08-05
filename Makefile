@@ -6,6 +6,9 @@ WEBPATH ?= /srv/sites/butler/docs
 DOXYGEN_FILE ?= ./Doxyfile.cfg
 OUTPUT_DIR ?= $(WORKSPACE)
 SOURCES ?= sources
+DESTDIR ?=
+PREFIX ?= /usr/local/share
+MANDIR ?= $(DESTDIR)$(PREFIX)/man
 
 all: get fixmain docs web
 
@@ -53,7 +56,7 @@ web:
 #########################
 .PHONY: installman
 installman:
-	$(WORKSPACE)/installman
+	MANDIR=$(MANDIR) $(WORKSPACE)/installman
 
 #########################
 # clean up
