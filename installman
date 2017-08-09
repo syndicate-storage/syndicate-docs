@@ -50,6 +50,8 @@ if [ -s installed_man_pages.txt ]; then
         else 
             echo "mandb tool not found, please verify that mandb (man) is installed"
         fi
+    else
+        echo Updating the man database requires root privileges
     fi
 else
     rm installed_man_pages.txt
