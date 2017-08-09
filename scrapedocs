@@ -8,9 +8,6 @@
 mainsource=$1
 reffiles=""
 
-echo At `pwd`
-echo Contains `ls`
-echo Root contains `ls /`
 cd sources
 referencefunctions=`grep -r "@copy.*()" $mainsource | grep "\.h:" | awk '{ print $NF }' | sort -u`
 for reffunc in $referencefunctions
