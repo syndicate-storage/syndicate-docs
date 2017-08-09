@@ -1,0 +1,31 @@
+#!/bin/bash
+#Syntax:
+#    scrapedocs <DIRECTORY>
+#
+#    This tool removes all files in directories that are not in DIRECTORY and are not referenced by any of the files located in DIRECTORY.
+#    This command has the effect of minimizing the creation of docs related to source directories outside of the DIRECTORY specified.
+  
+mainsource=$1
+reffiles=""
+
+
+cd sources
+referencefunctions=`grep -r "@copy.*()" $mainsource | grep "\.h:" | awk '{ print $NF }' | sort -u`
+for reffunc in $referencefunctions
+do
+    grep -r "@brief.*$reffunc" * | grep -v "$1/" | awk -F: '{ print $1" " }' >> /tmp/reffiles.$$
+done
+cat /tmp/reffiles.$$ | sort -u > /tmp/rfiles.$$
+rm /tmp/reffiles.$$
+reffiles=`cat /tmp/rfiles.$$`
+rm /tmp/rfiles.$$
+
+for delfiles in `find . -type f | grep -v -e "\./$mainsource/" -e "./syndicate-storage.github.io/"`
+do
+    for reffile in $reffiles
+    do
+        if [[ ! "$delfiles" == "./$reffile" ]]; then
+            rm -f $delfiles
+        fi
+    done
+done
