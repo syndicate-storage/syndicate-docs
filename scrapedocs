@@ -8,17 +8,19 @@
 mainsource=$1
 reffiles=""
 
-
+echo At `pwd`
+echo Contains `ls`
+echo Root contains `ls /`
 cd sources
 referencefunctions=`grep -r "@copy.*()" $mainsource | grep "\.h:" | awk '{ print $NF }' | sort -u`
 for reffunc in $referencefunctions
 do
-    grep -r "@brief.*$reffunc" * | grep -v "$1/" | awk -F: '{ print $1" " }' >> /tmp/reffiles.$$
+    grep -r "@brief.*$reffunc" * | grep -v "$1/" | awk -F: '{ print $1" " }' >> reffiles.$$
 done
-cat /tmp/reffiles.$$ | sort -u > /tmp/rfiles.$$
-rm /tmp/reffiles.$$
-reffiles=`cat /tmp/rfiles.$$`
-rm /tmp/rfiles.$$
+cat reffiles.$$ | sort -u > rfiles.$$
+rm reffiles.$$
+reffiles=`cat rfiles.$$`
+rm rfiles.$$
 
 for delfiles in `find . -type f | grep -v -e "\./$mainsource/" -e "./syndicate-storage.github.io/"`
 do
