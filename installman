@@ -43,11 +43,13 @@ do
 done
 
 if [ -s installed_man_pages.txt ]; then
-    if [ -n `which mandb` ]; then
-        echo "Updating man database"
-        mandb $manpath
-    else 
-        echo "mandb tool not found, please verify that mandb (man) is installed"
+    if [[ `id` =~ uid=0 ]]; then
+        if [ -n `which mandb` ]; then
+            echo "Updating man database"
+            mandb $manpath
+        else 
+            echo "mandb tool not found, please verify that mandb (man) is installed"
+        fi
     fi
 else
     rm installed_man_pages.txt
