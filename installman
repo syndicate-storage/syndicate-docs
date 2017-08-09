@@ -43,15 +43,17 @@ do
 done
 
 if [ -s installed_man_pages.txt ]; then
-    if [[ `id` =~ uid=0 ]]; then
-        if [ -n `which mandb` ]; then
-            echo "Updating man database"
-            mandb $manpath
-        else 
-            echo "mandb tool not found, please verify that mandb (man) is installed"
+    if [[ ! $MANDIR =~ debian ]]; then #don't install if debhelper
+        if [[ `id` =~ uid=0 ]]; then
+            if [ -n `which mandb` ]; then
+                echo "Updating man database"
+                mandb $manpath
+            else 
+                echo "mandb tool not found, please verify that mandb (man) is installed"
+            fi
+        else
+            echo Updating the man database requires root privileges
         fi
-    else
-        echo Updating the man database requires root privileges
     fi
 else
     rm installed_man_pages.txt
