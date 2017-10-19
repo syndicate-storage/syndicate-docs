@@ -10,7 +10,7 @@ DESTDIR ?=
 PREFIX ?= /usr/local/share
 MANDIR ?= $(DESTDIR)$(PREFIX)/man
 
-all: get fixmain docs web
+all: getgit fixmain docs web
 
 #########################
 # get the source via butler
