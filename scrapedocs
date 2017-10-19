@@ -19,11 +19,13 @@ while [ $# -gt 0 ]; do
     done
 done
 
-cat reffiles.$$ | sort -u > rfiles.$$
-rm reffiles.$$
-reffiles=""
-reffiles=`cat rfiles.$$`
-rm rfiles.$$
+if [ -f reffiles.$$ ]; then
+    cat reffiles.$$ | sort -u > rfiles.$$
+    rm reffiles.$$
+    reffiles=""
+    reffiles=`cat rfiles.$$`
+    rm rfiles.$$
+fi
 
 echo Removing files
 for delfiles in `find . -type f | grep -v -f mainsources -e "./syndicate-storage.github.io/"`
