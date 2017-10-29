@@ -35,18 +35,21 @@ for projname in $@; do
             if [ ! -d "$SOURCES/$proj" ]; then
                 echo "Error: $1 not found"
             fi
+            cd -
         fi
     else
         proj=`basename $projname`
         if [ -d "$SOURCES/$proj" ]; then
             cd "$SOURCES/$proj"
             git pull
+            cd -
         else
             cd "$SOURCES"
             git clone $projname
             if [ ! -d "$proj" ]; then
                 echo Error: $1 was not found
             fi
+            cd -
         fi
     fi
 done
