@@ -17,14 +17,14 @@ all: getgit fixmain docs web
 #########################
 .PHONY: get
 get:
-	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject syndicate-core syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io
+	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject syndicate-core syndicate-ug-tools syndicate-dataset-manager https://github.com/syndicate-storage/syndicate-storage.github.io 
 
 #########################
 # get the source via github
 #########################
 .PHONY: getgit
 getgit:
-	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject https://github.com/syndicate-storage/syndicate-core https://github.com/syndicate-storage/syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io
+	PROJECTPATH=$(PROJECTPATH) SOURCES=$(SOURCES) $(WORKSPACE)/getproject https://github.com/syndicate-storage/syndicate-core https://github.com/syndicate-storage/syndicate-ug-tools https://github.com/syndicate-storage/syndicate-storage.github.io https://github.com/syndicate-storage/syndicate-dataset-manager
 
 #########################
 # fix the header info for the main page, remove "layout" and "title" from markup
