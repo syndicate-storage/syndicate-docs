@@ -5,7 +5,7 @@
 
 #verify doxypypy location
 doxypypy_loc=`which doxypypy`
-if [ -n $doxypypy_loc ]; then
+if [ -n "$doxypypy_loc" ]; then
     DOXYPYPY_PATH=`dirname $doxypypy_loc`
 elif [ ! -e $DOXYPYPY_PATH/doxypypy ]; then
     echo "doxypypy was not found, please verify that doxypypy is installed"
