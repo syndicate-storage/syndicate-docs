@@ -9,6 +9,7 @@ SOURCES ?= sources
 DESTDIR ?=
 PREFIX ?= /usr/local/share
 MANDIR ?= $(DESTDIR)$(PREFIX)/man
+DOXYPYPY_PATH ?= /usr/local/bin
 
 all: getgit fixmain docs web
 
@@ -41,7 +42,7 @@ fixmain:
 #########################
 .PHONY: docs
 docs:
-	DOXYGEN_FILE=$(DOXYGEN_FILE) $(WORKSPACE)/makedocs
+	DOXYGEN_FILE=$(DOXYGEN_FILE) DOXYPYPY_PATH=$(DOXYPYPY_PATH) $(WORKSPACE)/makedocs
 
 #########################
 # copy generated html to web path

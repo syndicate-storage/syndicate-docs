@@ -1,11 +1,21 @@
 #!/bin/bash
 
 : ${DOXYGEN_FILE:=./Doxyfile.cfg}
+: ${DOXYPYPY_PATH:=/usr/local/bin}
+
+#verify doxypypy location
+doxypypy_loc=`which doxypypy`
+if [ -n $doxypypy_loc ]; then
+    DOXYPYPY_PATH=`dirname $doxypypy_loc`
+elif [ ! -e $DOXYPYPY_PATH/doxypypy ]; then
+    echo "doxypypy was not found, please verify that doxypypy is installed"
+    exit 1
+fi
 
 #generate documentation
 if [ -z `which doxygen` ]; then
     echo "doxygen tool not found, please verify that Doxygen is installed"
-    exit
+    exit 1
 fi
 doxygen "$DOXYGEN_FILE"
 

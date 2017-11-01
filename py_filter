@@ -1,2 +1,2 @@
 #!/bin/bash
-doxypypy -a -c $1
+${DOXYPYPY_PATH}/doxypypy -a -c $1
